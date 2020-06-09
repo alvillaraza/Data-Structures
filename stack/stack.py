@@ -134,7 +134,7 @@ class LinkedList:
         return max_value
 
 
-# using array
+# using array ---
 # class Stack:
 #     def __init__(self):
 #         self.size = 0
@@ -143,63 +143,60 @@ class LinkedList:
 #     def __len__(self):
 #         return self.size
 
-#     def push(self, value):
+#     def push(self, value):  #Big O = O(1)
 #         self.storage.append(value)
 #         self.size += 1
 
 #     def pop(self):
 #         if len(self.storage) > 0:
-#             self.storage
 #             self.size -= 1
 #             return self.storage.pop()
 
 
+
+
 # Using linked list
-class Node:
-    def __init__(self, value=None, next_node=None):
-        self.value = value
-        self.next_node = next_node
-
-    def get_value(self):
-        return self.value
-
-    def get_next(self):
-        return self.value
-
-    def set_next(self, new_next):
-        self.next_node = new_next
-
-
-class Stack:
+class Stack():
     def __init__(self):
         self.size = 0
-        self.storage = list()
-        self.head = None
-        self.tail = None
+        self.storage = LinkedList()
 
     def __len__(self):
-        return len(self.storage)
+        return self.size
 
-#insert a value
+#insert a node
+    
     def push(self, value):
-        new_node = Node(value, None)
-        if self.head is None:
-            self.head = new_node
-            self.tail = new_node
+        if self.storage.head is None:
+            self.head = Node(value, None)
+            self.size += 1
         else:
-            self.tail.set_next(new_node)
-            self.tail = new_node
+            self.storage.add_to_tail(value)
+            self.size += 1
 
-#delete a value
+#delete a node
     def pop(self):
-        if self.head is None:
+        if self.storage.head is None:
             return None
-        if self.head.get_next() is None:
-            head = self.head
-            self.head = None
-            self.tail = None
-            return head.get_value()
+        else:
+            # popped = self.storage.head.value
+            # self.storage.head = self.storage.head.next_node
+            # self.storage.remove_head()
+            self.storage.remove_tail()
+            self.size -= 1
 
-        value = self.head.get_value()
-        self.head = self.head.get_next()
-        return value
+
+# def push(self, value):
+#     if self.head == 0:
+#         self.storage.remove_head()
+#         self.size += 1
+#     else:
+#         self.storage.add_to_tail(value)
+#         self.size += 1
+
+# def pop(self):
+#     if self.size > 0:
+#         self.size -= 1
+#         return self.storage.remove_tail()
+#     else:
+#         return None
