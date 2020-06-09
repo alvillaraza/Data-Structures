@@ -76,23 +76,24 @@ class DoublyLinkedList:
         #if there is only 1 element in the list, remove head and tail should be none also
         if self.head.next is None:
             #get reference to the head             
-            value = self.head 
+            head = self.head 
             #delete the head reference
             self.head = None 
             #there should be no tail
             self.tail = None 
             #return the value
-            self.length -= 1
-            return value
+            self.length = 0
+            return head.value
         else:
-            value = self.head
+            self.length -= 1
+            head = self.head
             #remove the current head
             self.head = None
             #make current head's next node the new head of the list
-            self.current_next = self.head
+            self.prev = None
+            self.head = self.head.current_next
             #return value of removed Node
-            self.length -= 1
-            return value
+            return head
 
     """Wraps the given value in a ListNode and inserts it 
     as the new tail of the list. Don't forget to handle 
@@ -119,7 +120,28 @@ class DoublyLinkedList:
     current tail's previous node the new tail of the List.
     Returns the value of the removed Node."""
     def remove_from_tail(self):
-        pass
+        if not self.head and not self.tail:
+           return None
+        #if there is only 1 element on the list, remove head and tail should be none
+        if self.head.next is None:
+            #get reference to the head             
+            head = self.head 
+            #delete the head reference
+            self.head = None 
+            #there should be no tail
+            self.tail = None 
+            #return the value
+            self.length = 0
+            return head.value
+        else:
+            self.length -= 1
+            tail = self.tail
+            #remove current tail
+            self.tail = None
+            #make current tail's next node the new tail of the list
+            self.next = None
+            self.tail = self.tail.current_prev
+            return tail
 
     """Removes the input node from its current spot in the 
     List and inserts it as the new head node of the List."""
@@ -138,4 +160,18 @@ class DoublyLinkedList:
         
     """Returns the highest value currently in the list"""
     def get_max(self):
-        pass
+        if not self.head:
+            return None
+        # reference to the largest value we've seen so far
+        max_value = self.head.value
+        # reference to our current node as we traverse the list
+        current = self.head.next
+        # check to see if we're still at a valid list node
+        while current:
+            # check to see if the current value is greater than the max_value
+            if current.value > max_value:
+                # if so, update our max_value variable
+                max_value = current.value
+            # update the current node to the next node in the list
+            current = current.next
+        return max_value
