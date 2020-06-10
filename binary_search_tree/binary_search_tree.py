@@ -40,41 +40,44 @@ class BSTNode:
     # False if it does not
 
     def contains(self, target):
-        #if root value equals the target, return true
+        # if root value equals the target, return true
         if self.value == target:
             return True
-        #if value is greater than target, 
+        # if value is greater than target,
         if self.value > target:
             if self.left:
-                #then dismiss the right and recursively check down left
+                # then dismiss the right and recursively check down left
                 return self.left.contains(target)
         elif self.value < target:
             if self.right:
                 return self.right.contains(target)
         else:
-            return False 
-            
+            return False
 
     # Return the maximum value found in the tree
+
     def get_max(self):
-        #if there is no right, the max value is the root value
+        # if there is no right, the max value is the root value
         if self.right is None:
             return self.value
-        #if there are items on the right,
+        # if there are items on the right,
         else:
-            #get the max value of the items on the right
-            return self.right.get_max() 
+            # get the max value of the items on the right
+            return self.right.get_max()
 
-        
     # Call the function `fn` on the value of each node
+
     def for_each(self, fn):
-        if self.value:
+        if self.left is None and self.right is None:
             return fn(self.value)
-        if self.left:
-            self.left.value.for_each(fn)
-        if self.right:
-            self.right.value.for_each(fn)
-     
+        if self.left and not self.right:
+            return fn(self.value), self.left.for_each(fn)
+        if self.right and not self.left:
+            return fn(self.value), self.right.for_each(fn)
+        if self.left and self.right:
+            return fn(self.value), self.left.for_each(fn), self.right.for_each(fn)
+        # if self.right:
+        #     return self.value, self.right.for_each(fn)
 
     # Part 2 -----------------------
 
