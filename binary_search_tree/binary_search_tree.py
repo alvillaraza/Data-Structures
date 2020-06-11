@@ -29,8 +29,8 @@ class BSTNode:
             else:
                 self.left.insert(value)
 
-        # if greater than
-        elif value > self.value:
+        # if greater than...also the test (test file on line 22) asserts that a duplicate should be inserted on the right
+        elif value >= self.value:
             if self.right is None:
                 self.right = BSTNode(value)
             else:
@@ -38,43 +38,50 @@ class BSTNode:
 
     # Return True if the tree contains the value
     # False if it does not
-
     def contains(self, target):
-        #if root value equals the target, return true
+        # if root value equals the target, return true
         if self.value == target:
             return True
-        #if value is greater than target, 
+        # if value is greater than target,
         if self.value > target:
-            if self.left:
-                #then dismiss the right and recursively check down left
+            #if there is a value on the right,
+            if self.right:
+                # then dismiss the right and recursively check down left
                 return self.left.contains(target)
         elif self.value < target:
             if self.right:
                 return self.right.contains(target)
+        #if there is no value, then return false
         else:
-            return False 
-            
+            return False
 
     # Return the maximum value found in the tree
     def get_max(self):
-        #if there is no right, the max value is the root value
+        # if there is no right, the max value is the root value
         if self.right is None:
             return self.value
-        #if there are items on the right,
+        # if there are items on the right,
         else:
-            #get the max value of the items on the right
-            return self.right.get_max() 
+            # get the max value of the items on the right
+            return self.right.get_max()
 
-        
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        if self.value:
-            return fn(self.value)
-        if self.left:
-            self.left.value.for_each(fn)
+        # if self.left is None and self.right is None:
+        #     return fn(self.value)
+        # if self.left and not self.right:
+        #     return fn(self.value), self.left.for_each(fn)
+        # if self.right and not self.left:
+        #     return fn(self.value), self.right.for_each(fn)
+        # if self.left and self.right:
+        #     return fn(self.value), self.left.for_each(fn), self.right.for_each(fn)
+
+        #in BSTNode, value is not optional (it's not value=None on line 15), so value always exists
+        fn(self.value)
         if self.right:
-            self.right.value.for_each(fn)
-     
+            self.right.for_each(fn)
+        if self.left:
+            self.left.for_each(fn)
 
     # Part 2 -----------------------
 
@@ -82,17 +89,60 @@ class BSTNode:
     # Hint:  Use a recursive, depth first traversal
 
     def in_order_print(self, node):
-        pass
-
+        #lowest number is to the left of the tree
+        #base case
+        if node is None:
+            return
+        #recursive case
+        else:
+            
+            self.in_order_print(node.left)
+            print(node.value)
+            self.in_order_print(node.right)
+  
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+    #not recursive, but iterative
+        # #start queue with root node
+        #make pointer variable that updates at the beginning of each loop while you're iterating through
+        q = []
+        q.append(node)
+
+        # #While loop that checks size of queue
+        while len(q) > 0:
+            #pop method returns the item that was popped
+            node = q.pop(0)
+            print(node.value)
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+
+        
+         
+
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        #stack
+        #start stack with root node
+
+        #while loop, while stack is not empty
+            #use a pointer
+        s = []
+        s.append(node)
+
+        # #While loop that checks size of queue
+        while len(s) > 0:
+            #pop method returns the item that was popped
+            node = s.pop(-1)
+            print(node.value)
+            if node.left:
+                s.append(node.left)
+            if node.right:
+                s.append(node.right)
 
     # Stretch Goals -------------------------
     # Note: Research may be required
