@@ -103,10 +103,13 @@ class BSTNode:
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
+        #make pointer variable that updates at the beginning of each loop while you're iterating through
         q = []
         q.append(node)
 
+        # #While loop that checks size of queue
         while len(q) > 0:
+            #pop method returns the item that was popped
             node = q.pop(0)
             print(node.value)
             if node.left:
@@ -117,11 +120,7 @@ class BSTNode:
     #not recursive, but iterative
         # #start queue with root node
         
-        # #While loop that checks size of queue
-        # while self.size < 0:
-        #     #make pointer variable that updates at the beginning of each loop while you're iterating through
          
-     
 
 
     # Print the value of every node, starting with the given node,
@@ -132,7 +131,18 @@ class BSTNode:
 
         #while loop, while stack is not empty
             #use a pointer
-        pass
+        s = []
+        s.append(node)
+
+        # #While loop that checks size of queue
+        while len(s) > 0:
+            #pop method returns the item that was popped
+            node = s.pop(-1)
+            print(node.value)
+            if node.left:
+                s.append(node.left)
+            if node.right:
+                s.append(node.right)
 
     # Stretch Goals -------------------------
     # Note: Research may be required
