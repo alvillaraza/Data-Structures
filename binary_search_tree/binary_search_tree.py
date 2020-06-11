@@ -103,6 +103,8 @@ class BSTNode:
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
+    #not recursive, but iterative
+        # #start queue with root node
         #make pointer variable that updates at the beginning of each loop while you're iterating through
         q = []
         q.append(node)
@@ -117,8 +119,6 @@ class BSTNode:
             if node.right:
                 q.append(node.right)
 
-    #not recursive, but iterative
-        # #start queue with root node
         
          
 
@@ -154,9 +154,3 @@ class BSTNode:
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
         pass
-
-bst = BSTNode(1)
-bst.insert(2)
-bst.insert(3)
-bst.insert(4)
-bst.bft_print(bst)

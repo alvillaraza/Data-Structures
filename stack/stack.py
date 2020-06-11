@@ -89,6 +89,7 @@ class LinkedList:
 
         value = self.tail.get_value()
         self.tail = current
+        self.tail.set_next(None)
         return value
 
     def contains(self, value):
@@ -167,36 +168,17 @@ class Stack():
 #insert a node
     
     def push(self, value):
-        if self.storage.head is None:
-            self.head = Node(value, None)
-            self.size += 1
-        else:
             self.storage.add_to_tail(value)
             self.size += 1
 
 #delete a node
     def pop(self):
-        if self.storage.head is None:
+        if self.size == 0:
             return None
         else:
             # popped = self.storage.head.value
             # self.storage.head = self.storage.head.next_node
             # self.storage.remove_head()
-            self.storage.remove_tail()
             self.size -= 1
+            return self.storage.remove_tail()
 
-
-# def push(self, value):
-#     if self.head == 0:
-#         self.storage.remove_head()
-#         self.size += 1
-#     else:
-#         self.storage.add_to_tail(value)
-#         self.size += 1
-
-# def pop(self):
-#     if self.size > 0:
-#         self.size -= 1
-#         return self.storage.remove_tail()
-#     else:
-#         return None
