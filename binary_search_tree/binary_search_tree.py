@@ -29,8 +29,8 @@ class BSTNode:
             else:
                 self.left.insert(value)
 
-        # if greater than
-        elif value > self.value:
+        # if greater than...also the test (test file on line 22) asserts that a duplicate should be inserted on the right
+        elif value >= self.value:
             if self.right is None:
                 self.right = BSTNode(value)
             else:
@@ -44,12 +44,14 @@ class BSTNode:
             return True
         # if value is greater than target,
         if self.value > target:
-            if self.left:
+            #if there is a value on the right,
+            if self.right:
                 # then dismiss the right and recursively check down left
                 return self.left.contains(target)
         elif self.value < target:
             if self.right:
                 return self.right.contains(target)
+        #if there is no value, then return false
         else:
             return False
 
@@ -65,15 +67,21 @@ class BSTNode:
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        if self.left is None and self.right is None:
-            return fn(self.value)
-        if self.left and not self.right:
-            return fn(self.value), self.left.for_each(fn)
-        if self.right and not self.left:
-            return fn(self.value), self.right.for_each(fn)
-        if self.left and self.right:
-            return fn(self.value), self.left.for_each(fn), self.right.for_each(fn)
-   
+        # if self.left is None and self.right is None:
+        #     return fn(self.value)
+        # if self.left and not self.right:
+        #     return fn(self.value), self.left.for_each(fn)
+        # if self.right and not self.left:
+        #     return fn(self.value), self.right.for_each(fn)
+        # if self.left and self.right:
+        #     return fn(self.value), self.left.for_each(fn), self.right.for_each(fn)
+
+        #in BSTNode, value is not optional (it's not value=None on line 15), so value always exists
+        fn(self.value)
+        if self.right:
+            self.right.for_each(fn)
+        if self.left:
+            self.left.for_each(fn)
 
     # Part 2 -----------------------
 
@@ -81,16 +89,49 @@ class BSTNode:
     # Hint:  Use a recursive, depth first traversal
 
     def in_order_print(self, node):
-        pass
-
+        #lowest number is to the left of the tree
+        #base case
+        if node is None:
+            return
+        #recursive case
+        else:
+            
+            self.in_order_print(node.left)
+            print(node.value)
+            self.in_order_print(node.right)
+  
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        q = []
+        q.append(node)
+
+        while len(q) > 0:
+            node = q.pop(0)
+            print(node.value)
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+
+    #not recursive, but iterative
+        # #start queue with root node
+        
+        # #While loop that checks size of queue
+        # while self.size < 0:
+        #     #make pointer variable that updates at the beginning of each loop while you're iterating through
+         
+     
+
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
+        #stack
+        #start stack with root node
+
+        #while loop, while stack is not empty
+            #use a pointer
         pass
 
     # Stretch Goals -------------------------
@@ -103,3 +144,9 @@ class BSTNode:
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
         pass
+
+bst = BSTNode(1)
+bst.insert(2)
+bst.insert(3)
+bst.insert(4)
+bst.bft_print(bst)
